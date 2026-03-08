@@ -23,7 +23,7 @@ const itemsPerPage = ref(5)
 const dialog = ref(false)
 const chosenMessage = ref(null)
 
-const socket = io("http://localhost:3001");
+const socket = io("http://localhost:3000");
 
 socket.on("active users", (users) => {
 	activeUsers.value = users

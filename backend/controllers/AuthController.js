@@ -21,7 +21,7 @@ export const login = (req, res) => {
             return res.status(401).json({ message: "Invalid credentials" })
         }
 
-        const token = jwt.sign(result[0], 'secret_key_or_smn')
+        const token = jwt.sign(result[0], process.env.JWT_SECRET)
         res.status(200).json({ user, token })
     })
 }

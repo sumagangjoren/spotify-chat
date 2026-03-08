@@ -14,7 +14,7 @@ const authenticateToken = (req, res, next) => {
     console.log("hello ferson from middleware! your token is: " + token)
     if(token == null) return res.sendStatus(401)
 
-    jwt.verify(token, 'secret_key_or_smn', (err, user) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
         if(err) return res.sendStatus(403)
         req.user = user
         next()
