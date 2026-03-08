@@ -23,7 +23,7 @@ const itemsPerPage = ref(5)
 const dialog = ref(false)
 const chosenMessage = ref(null)
 
-const socket = io("http://localhost:3000");
+const socket = io(process.env.VUE_APP_BACKEND_URL);
 
 socket.on("active users", (users) => {
 	activeUsers.value = users
@@ -44,11 +44,8 @@ watch(itemsPerPage, () => {
 onMounted(async () => {
 	getAllMessages()
 
-	var client_id = '3986226f0e2d41b590779b28ce14a56a';
-	var client_secret = '146395d6cb6d4e0093984a67141b5bed'
-
 	axios.post('https://accounts.spotify.com/api/token', 
-		`grant_type=client_credentials&client_id=${client_id}&client_secret=${client_secret}&scope=user-top-read`, 
+		`grant_type=client_credentials&client_id=${process.env.VUE_APP_CLIENT_ID}&client_secret=${process.env.VUE_APP_CLIENT_SECRET}&scope=user-top-read`, 
 		{
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded'
@@ -67,7 +64,7 @@ onMounted(async () => {
 })
 
 const getAllMessages = () => {
-	axios.get('http://localhost:3000/', {
+	axios.get(process.env.VUE_APP_BACKEND_URL, {
 		headers: {
 			Authorization: `Bearer ${authStore.token}`
 		}
@@ -87,7 +84,7 @@ const logout = () => {
 }
 
 const sendMessage = () => {
-	axios.post('http://localhost:3000/send-message', {
+	axios.post(process.env.VUE_APP_BACKEND_URL + '/send-message', {
 		user_id: authStore.authUser.id,
 		type: 0,
 		message: message.value
@@ -112,7 +109,7 @@ const playSong = (trackId) => {
 }
 
 const shareSong = (trackId) => {
-	axios.post('http://localhost:3000/send-message', {
+	axios.post(process.env.VUE_APP_BACKEND_URL + '/send-message', {
 		user_id: authStore.authUser.id,
 		type: 1,
 		message: trackId
@@ -156,7 +153,7 @@ const showDialog = (messageId) => {
 }
 
 const deleteMessage = () => {
-	axios.delete(`http://localhost:3000/delete-message/${chosenMessage.value}`, {
+	axios.delete(`${process.env.VUE_APP_BACKEND_URL}/delete-message/${chosenMessage.value}`, {
 		headers: {
 			Authorization: `Bearer ${authStore.token}`
 		}

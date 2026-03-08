@@ -14,10 +14,12 @@ const form = ref({
     password: ''
 })
 
+console.log(process.env.VUE_APP_CLIENT_ID)
+
 async function login() {
     try {
         loading.value = true
-        const result = await axios.post("http://localhost:3000/login", form.value)
+        const result = await axios.post(process.env.VUE_APP_BACKEND_URL + '/login', form.value)
         console.log(result)
         if(result.status == 200) {
             authStore.authUser = result.data.user

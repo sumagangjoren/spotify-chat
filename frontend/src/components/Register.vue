@@ -18,7 +18,7 @@ const form = ref({
 async function register() {
     loading.value = true
     try {
-        const result = await axios.post('http://localhost:3000/register', form.value)
+        const result = await axios.post(process.env.VUE_APP_BACKEND_URL + '/register', form.value)
         console.log(result)
         if(result.status == 200) {
             authStore.authUser = result.data.user
