@@ -6,8 +6,7 @@ import { createServer } from 'node:http';
 import cors from 'cors'
 import router from './routes/index.js'
 import { Server } from 'socket.io';
-console.log("env")
-console.log(process.env)
+
 const app = express();
 const server = createServer(app);
 const io = new Server(server, {
